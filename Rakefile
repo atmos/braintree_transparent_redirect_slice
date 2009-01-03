@@ -5,10 +5,10 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "braintree_transparent_redirect_slice"
-AUTHOR = "Your Name"
-EMAIL = "Your Email"
-HOMEPAGE = "http://merbivore.com/"
-SUMMARY = "Merb Slice that provides ..."
+AUTHOR = "Corey Donohoe"
+EMAIL = "atmos@atmos.org"
+HOMEPAGE = "http://github.com/atmos/braintree_transparent_redirect_slice/"
+SUMMARY = "Merb Slice that allows you to process stuff with braintree, without storing credit cards and shit" 
 GEM_VERSION = "1.0.7.1"
 
 spec = Gem::Specification.new do |s|
