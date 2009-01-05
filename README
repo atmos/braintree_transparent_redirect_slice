@@ -24,6 +24,14 @@ rake slices:braintree_transparent_redirect_slice:install
 
 ------------------------------------------------------------------------------
 
+Goals
+-----
+* actually work, as in all specs passing
+* sanitize and abstract the braintree models into a gem you can use outside of merb
+* hook into merb-auth so you can associate vault items into more than just the user.
+  i.e. instance method on the session perhaps
+* support bank account info, not just credit cards
+
 Developing
 ----------
 % thor merb:gem:install
