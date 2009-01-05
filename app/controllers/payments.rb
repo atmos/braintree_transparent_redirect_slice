@@ -1,4 +1,4 @@
-class Payments < Application
+class Payments < BraintreeTransparentRedirectSlice::Application
   def new(credit_card_id)
     fetch_credit_card(credit_card_id)
 

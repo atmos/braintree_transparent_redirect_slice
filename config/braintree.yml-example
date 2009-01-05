@@ -1,0 +1,17 @@
+development: &defaults
+  key: UVgCejU48ANga4mKF77WFXfm2yUve76W
+  key_id: 776320
+  username: testapi
+  password: password1
+  transact_api_url: https://secure.braintreepaymentgateway.com/api/transact.php
+  query_api_url: https://secure.braintreepaymentgateway.com/api/query.php
+
+test:
+  <<: *defaults
+  key:      UVgCejU48ANga4mKF77WFXfm2yUve76W
+  key_id:   776320
+  username: testapi
+  password: password1
+
+production:
+  <<: *defaults

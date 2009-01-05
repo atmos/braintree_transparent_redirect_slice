@@ -1,8 +1,11 @@
 if defined?(Merb::Plugins)
-
   $:.unshift File.dirname(__FILE__)
 
   dependency 'merb-slices', :immediate => true
+  dependency 'libxml-ruby', '=0.9.7', :require_as => 'libxml'
+  dependency 'dm-core', '>=0.9.8'
+  dependency 'dm-validations', '>=0.9.8'
+
   Merb::Plugins.add_rakefiles "braintree_transparent_redirect_slice/merbtasks", "braintree_transparent_redirect_slice/slicetasks", "braintree_transparent_redirect_slice/spectasks"
 
   # Register the Slice for the current host application
@@ -27,7 +30,10 @@ if defined?(Merb::Plugins)
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
     def self.loaded
-      BRAINTREE = { }
+    end
+
+    def self.config
+      @config ||= { }
     end
 
     # Initialization hook - runs before AfterAppLoads BootLoader
@@ -35,7 +41,7 @@ if defined?(Merb::Plugins)
       bt = YAML.load_file(Merb.root / 'config' / 'braintree.yml')
       if bt[Merb.env]
         bt[Merb.env].each do |k,v|
-          BRAINTREE[k.to_sym] = v
+          config[k.to_sym] = v
         end
       end
     end
