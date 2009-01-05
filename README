@@ -19,9 +19,11 @@ dependency "braintree_transparent_redirect_slice", "=1.0.7.1"
 # example: /:controller/:action/:id
 slice(:BraintreeTransparentRedirectSlice)
 
+# example: /billing/controller/:action/:id
+add_slice(:braintree_transparent_redirect_slice, :name_prefix => nil, :path_prefix => "billing")
+
 Normally you should also run the following rake task:
 rake slices:braintree_transparent_redirect_slice:install
-
 ------------------------------------------------------------------------------
 
 Goals
@@ -35,6 +37,5 @@ Goals
 Developing
 ----------
 % thor merb:gem:install
+% cp config/braintree.yml-example config/braintree.yml
 % bin/rake
-or
-% bin/spec
