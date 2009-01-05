@@ -5,7 +5,6 @@ describe  "/braintree_transparent_redirect_slice/" do
     mount_slice
   end
   describe "GET /" do
-
     before(:each) do
       @response = request("/braintree_transparent_redirect_slice/")
     end
@@ -18,9 +17,9 @@ describe  "/braintree_transparent_redirect_slice/" do
     # You can also use the other webrat methods to click links,
     # fill up forms etc...
     it "should render the default slice layout" do
-      @response.should have_tag(:h1, :content => "BraintreeTransparentRedirectSlice Slice")
-      @response.should have_selector("div#container div#main")
-      @response.should have_xpath("//div[@id='container']/div[@id='main']")
+      @response.should have_tag(:strong, :content => BraintreeTransparentRedirectSlice.description)
+#      @response.should have_selector("div#container div#main")
+#      @response.should have_xpath("//div[@id='container']/div[@id='main']")
     end
   end
 end

@@ -1,9 +1,13 @@
 require 'rubygems'
 require 'merb-core'
 require 'merb-slices'
+require 'merb-auth-core'
+require 'merb-auth-more'
 require 'spec'
 require 'pp'
 require 'ruby-debug'
+require 'dm-core'
+require 'dm-validations'
 
 # Add braintree_transparent_redirect_slice.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true
@@ -11,6 +15,8 @@ Merb::Plugins.config[:merb_slices][:search_path]   = File.join(File.dirname(__FI
 
 # Require braintree_transparent_redirect_slice.rb explicitly so any dependencies are loaded
 require Merb::Plugins.config[:merb_slices][:search_path]
+
+require File.expand_path(File.dirname(__FILE__)+'/fixtures/user')
 require File.expand_path(File.dirname(__FILE__)+'/spec_helpers/edit_form_helper')
 require File.expand_path(File.dirname(__FILE__)+'/spec_helpers/braintree/api_helper')
 
@@ -24,6 +30,8 @@ Merb.start_environment(
   :environment => ENV['MERB_ENV'] || 'test',
   :session_store => 'memory'
 )
+DataMapper.setup(:default, 'sqlite3::memory:')
+DataMapper.auto_migrate!
 
 module Merb
   module Test
@@ -67,7 +75,10 @@ end
 #
 Merb::Test.add_helpers do
   def mount_slice
-    Merb::Router.prepare { add_slice(:BraintreeTransparentRedirectSlice, "braintree_transparent_redirect_slice") } if standalone?
+    Merb::Router.prepare do
+      slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
+      add_slice(BraintreeTransparentRedirectSlice)
+    end
   end
 
   def dismount_slice

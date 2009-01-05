@@ -5,6 +5,9 @@ if defined?(Merb::Plugins)
   dependency 'libxml-ruby', '=0.9.7', :require_as => 'libxml'
   dependency 'dm-core', '>=0.9.8'
   dependency 'dm-validations', '>=0.9.8'
+  dependency 'merb-auth-core'
+  dependency 'merb-auth-more'
+  require 'net/https'
 
   Merb::Plugins.add_rakefiles "braintree_transparent_redirect_slice/merbtasks", "braintree_transparent_redirect_slice/slicetasks", "braintree_transparent_redirect_slice/spectasks"
 
@@ -64,8 +67,12 @@ if defined?(Merb::Plugins)
     # @note prefix your named routes with :braintree_transparent_redirect_slice_
     #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
+      scope.resources :credit_cards, :member     => {:edit_response => :get},
+                                     :collection => {:new_response  => :get}  do
+        scope.resources :payments, :collection => {:new_response => :get}
+      end
       # example of a named route
-      scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
+      #scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
       # the slice is mounted at /braintree_transparent_redirect_slice - note that it comes before default_routes
       scope.match('/').to(:controller => 'main', :action => 'index').name(:home)
       # enable slice-level default routes by default

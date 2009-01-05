@@ -7,15 +7,15 @@ module Braintree
 
     def initialize(attributes = nil)
       attributes.each { |k,v| self.send("#{k}=", v) } unless attributes.nil?
-      self.key, self.key_id = BRAINTREE[:key], BRAINTREE[:key_id]
+      self.key, self.key_id = BraintreeTransparentRedirectSlice.config[:key], BraintreeTransparentRedirectSlice.config[:key_id]
       self.time = self.class.formatted_time_value
     end
 
     def hash
       items = if customer_vault_id.nil?
-        [orderid, amount, time, BRAINTREE[:key]]
+        [orderid, amount, time, BraintreeTransparentRedirectSlice.config[:key]]
       else
-        [orderid, amount, customer_vault_id, time, BRAINTREE[:key]]
+        [orderid, amount, customer_vault_id, time, BraintreeTransparentRedirectSlice.config[:key]]
       end
       Digest::MD5.hexdigest(items.join('|'))
     end
@@ -30,7 +30,7 @@ module Braintree
     end
 
     def post(params)
-      uri = Addressable::URI.parse(BRAINTREE[:transact_api_url])
+      uri = Addressable::URI.parse(BraintreeTransparentRedirectSlice.config[:transact_api_url])
 
       server = Net::HTTP.new(uri.host, 443)
       server.use_ssl = true

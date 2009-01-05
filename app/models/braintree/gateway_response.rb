@@ -36,9 +36,9 @@ module Braintree
     # MD5 and format listed in the documentation.
     def generated_hash
       items = if customer_vault_id.nil?
-        [orderid, amount, response, transactionid, avsresponse, cvvresponse, time, BRAINTREE[:key]]
+        [orderid, amount, response, transactionid, avsresponse, cvvresponse, time, BraintreeTransparentRedirectSlice.config[:key]]
       else
-        [orderid, amount, response, transactionid, avsresponse, cvvresponse, customer_vault_id, time, BRAINTREE[:key]]
+        [orderid, amount, response, transactionid, avsresponse, cvvresponse, customer_vault_id, time, BraintreeTransparentRedirectSlice.config[:key]]
       end
       Digest::MD5.hexdigest(items.join('|'))
     end
