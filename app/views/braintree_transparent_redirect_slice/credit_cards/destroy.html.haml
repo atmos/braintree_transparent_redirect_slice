@@ -1,4 +1,4 @@
-= form :action => BRAINTREE[:transact_api_url], :id => 'delete_vault_form' do
+= form :action => BraintreeTransparentRedirectSlice.config[:transact_api_url], :id => 'delete_vault_form' do
   %fieldset
     %legend I'm about to delete your billing information, are you sure you want to?
     = partial "gateway_request"

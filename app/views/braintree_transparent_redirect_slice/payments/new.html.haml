@@ -1,4 +1,7 @@
-= form :action => BRAINTREE[:transact_api_url], :id => 'new_payment_form' do
+#braintree-message
+  = message[:notice]
+
+= form :action => BraintreeTransparentRedirectSlice.config[:transact_api_url], :id => 'new_payment_form' do
   %fieldset
     %legend You're about to be charged
 

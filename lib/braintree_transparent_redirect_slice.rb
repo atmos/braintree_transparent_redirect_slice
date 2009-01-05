@@ -72,8 +72,8 @@ if defined?(Merb::Plugins)
     #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
       scope.resources :credit_cards, :member     => {:edit_response => :get},
-                                     :collection => {:new_response  => :get}  do
-        scope.resources :payments, :collection => {:new_response => :get}
+                                     :collection => {:new_response  => :get}  do |cards|
+        cards.resources :payments,   :collection => {:new_response => :get}
       end
       # example of a named route
       #scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
