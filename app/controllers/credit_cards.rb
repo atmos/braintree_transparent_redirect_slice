@@ -1,4 +1,4 @@
-class CreditCards < BraintreeTransparentRedirectSlice::Application
+class BraintreeTransparentRedirectSlice::CreditCards < BraintreeTransparentRedirectSlice::Application
   def index
     render
   end

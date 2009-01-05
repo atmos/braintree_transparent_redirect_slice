@@ -18,12 +18,12 @@ module Braintree
 
     def initialize(query_params)
       @query_params = query_params.merge({ 
-                              'username' => BRAINTREE[:username],
-                              'password' => BRAINTREE[:password]})
+                              'username' => BraintreeTransparentRedirectSlice.config[:username],
+                              'password' => BraintreeTransparentRedirectSlice.config[:password]})
     end
 
     def run
-      uri = Addressable::URI.parse(BRAINTREE[:query_api_url])
+      uri = Addressable::URI.parse(BraintreeTransparentRedirectSlice.config[:query_api_url])
 
       server = Net::HTTP.new(uri.host, 443)
       server.use_ssl = true

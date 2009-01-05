@@ -20,7 +20,6 @@ require File.expand_path(File.dirname(__FILE__)+'/fixtures/user')
 require File.expand_path(File.dirname(__FILE__)+'/spec_helpers/edit_form_helper')
 require File.expand_path(File.dirname(__FILE__)+'/spec_helpers/braintree/api_helper')
 
-
 # Using Merb.root below makes sure that the correct root is set for
 # - testing standalone, without being installed as a gem and no host application
 # - testing from within the host application; its root will be used
@@ -59,6 +58,9 @@ Spec::Runner.configure do |config|
     user = User.create(:login => 'quentin', :email => 'quentin@example.com',
                 :password => 'lolerskates', :password_confirmation => 'lolerskates')
   end
+  config.after(:each) do
+    dismount_slice
+  end
 
   def quentin_form_info
     { 'firstname' => 'Quentin', 'lastname' => 'Blake',
@@ -77,8 +79,10 @@ Merb::Test.add_helpers do
   def mount_slice
     Merb::Router.prepare do
       slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
-      add_slice(BraintreeTransparentRedirectSlice)
-    end
+      slice(:braintree_transparent_redirect_slice, :name_prefix => nil, :path_prefix => "billing")
+      match('/').to(:controller => 'braintree_transparent_redirect/main', :action => 'index').name(:login)
+      #add_slice(BraintreeTransparentRedirectSlice)
+    end if standalone?
   end
 
   def dismount_slice

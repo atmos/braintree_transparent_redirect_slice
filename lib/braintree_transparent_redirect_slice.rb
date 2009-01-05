@@ -7,6 +7,8 @@ if defined?(Merb::Plugins)
   dependency 'dm-validations', '>=0.9.8'
   dependency 'merb-auth-core'
   dependency 'merb-auth-more'
+  dependency 'merb-haml'
+  dependency 'merb-helpers'
   require 'net/https'
 
   Merb::Plugins.add_rakefiles "braintree_transparent_redirect_slice/merbtasks", "braintree_transparent_redirect_slice/slicetasks", "braintree_transparent_redirect_slice/spectasks"
@@ -87,6 +89,10 @@ if defined?(Merb::Plugins)
   #
   # BraintreeTransparentRedirectSlice.push_path(:application, BraintreeTransparentRedirectSlice.root)
   # BraintreeTransparentRedirectSlice.push_app_path(:application, Merb.root / 'slices' / 'braintree_transparent_redirect_slice')
+  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'application'
+  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'credit_cards'
+  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'payments'
+#  BraintreeTransparentRedirectSlice.push_path(:application, BraintreeTransparentRedirectSlice.root / 'app' / 'controllers')
   # ...
   #
   # Any component path that hasn't been set will default to BraintreeTransparentRedirectSlice.root
