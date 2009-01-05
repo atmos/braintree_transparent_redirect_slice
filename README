@@ -24,3 +24,9 @@ rake slices:braintree_transparent_redirect_slice:install
 
 ------------------------------------------------------------------------------
 
+Developing
+----------
+% thor merb:gem:install
+% bin/rake
+or
+% bin/spec
