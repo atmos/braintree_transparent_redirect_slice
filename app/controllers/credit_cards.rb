@@ -22,12 +22,12 @@ class BraintreeTransparentRedirectSlice::CreditCards < BraintreeTransparentRedir
     when 'approved'
       if @gateway_response.cvv_matches?
         session.user.credit_cards.create(:token => @gateway_response.customer_vault_id)
-        redirect(url(:credit_cards), :message => {:notice => 'Successfully stored your card info securely.'})
+        redirect(slice_url(:credit_cards), :message => {:notice => 'Successfully stored your card info securely.'})
       else
-        redirect(url(:new_credit_card), :message => {:notice => @gateway_response.cvvresponse_string, :transaction_id => params['transactionid']})
+        redirect(slice_url(:new_credit_card), :message => {:notice => @gateway_response.cvvresponse_string, :transaction_id => params['transactionid']})
       end
     else
-      redirect(url(:new_credit_card), :message => {:notice => @gateway_response.responsetext, :transaction_id => params['transactionid']})
+      redirect(slice_url(:new_credit_card), :message => {:notice => @gateway_response.responsetext, :transaction_id => params['transactionid']})
     end
   end
 
@@ -43,10 +43,10 @@ class BraintreeTransparentRedirectSlice::CreditCards < BraintreeTransparentRedir
     raise Unauthorized unless @gateway_response.is_valid?
     case @gateway_response.response_status
     when 'approved'
-      redirect(url(:credit_cards), :message => {:notice => 'Successfully updated your info in the vault.'})
+      redirect(slice_url(:credit_cards), :message => {:notice => 'Successfully updated your info in the vault.'})
     else
       fetch_credit_card(id)
-      redirect(url(:edit_credit_card, @credit_card), :message => {:notice => @gateway_response.responsetext})
+      redirect(slice_url(:edit_credit_card, @credit_card.id), :message => {:notice => @gateway_response.responsetext})
     end
   end
 

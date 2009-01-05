@@ -17,10 +17,10 @@
           %td= cc.info.name
           %td= cc.info.address
           %td= cc.info.cc_number
-          %td= link_to('More Info', url(:credit_card, cc))
-  %a{:href => url(:new_credit_card)} Add another?
+          %td= link_to('More Info', slice_url(:credit_card, cc))
+  %a{:href => slice_url(:new_credit_card)} Add another?
 - else
   %p 
     You don't have anything on file currently.
-    %a{:href => url(:new_credit_card)} Add one now?
+    %a{:href => slice_url(:new_credit_card)} Add one now?
 %hr

@@ -58,6 +58,19 @@ Spec::Runner.configure do |config|
     user = User.create(:login => 'quentin', :email => 'quentin@example.com',
                 :password => 'lolerskates', :password_confirmation => 'lolerskates')
   end
+
+  config.before(:each) do # transactional tests
+    repository(:default) do
+      while repository.adapter.current_transaction do
+        repository.adapter.current_transaction.rollback
+        repository.adapter.pop_transaction
+      end
+
+      transaction = DataMapper::Transaction.new(repository)
+      transaction.begin
+      repository.adapter.push_transaction(transaction)
+    end
+  end
   config.after(:each) do
     dismount_slice
   end
@@ -106,5 +119,5 @@ given "a user with a credit card in the vault" do
                             quentin_form_info.merge({'type'=>'sale', 'payment'=>'creditcard'}))
 
   response = request("/credit_cards/new_response", :params => api_response.params)
-  response.should redirect_to('/')
+  response.should redirect_to('/credit_cards')
 end

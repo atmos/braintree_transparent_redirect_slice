@@ -31,8 +31,8 @@ describe "" do
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#braintree-errors:contains('Successfully updated your info in the vault.')")
-        response.should have_selector("div#braintree-errorstable tbody td")
+        response.should have_selector("div#braintree-message:contains('Successfully updated your info in the vault.')")
+        response.should have_selector("table#braintree-card-info tbody td")
       end
     end
     describe "and a missing ccexp field" do
@@ -48,7 +48,7 @@ describe "" do
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#main-container:contains('Field required: ccexp REFID:')")
+        response.should have_selector("div#braintree-message:contains('Field required: ccexp REFID:')")
         response.should display_a_credit_card_edit_form_for_quentin
       end
     end

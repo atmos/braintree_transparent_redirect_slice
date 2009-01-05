@@ -10,6 +10,7 @@ if defined?(Merb::Plugins)
   dependency 'merb-haml'
   dependency 'merb-helpers'
   dependency 'merb-assets'
+  dependency 'merb-action-args'
   require 'net/https'
 
   Merb::Plugins.add_rakefiles "braintree_transparent_redirect_slice/merbtasks", "braintree_transparent_redirect_slice/slicetasks", "braintree_transparent_redirect_slice/spectasks"
