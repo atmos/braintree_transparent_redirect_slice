@@ -36,12 +36,12 @@ describe "" do
         api_response = Braintree::Spec::ApiRequest.new('10.00', nil, params)
 
         response = request("/credit_cards/new_response", :params => api_response.params)
-        response.should redirect_to('/')
+        response.should redirect_to('/credit_cards')
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#main-container:contains('Successfully stored your card info securely.')")
-        response.should have_selector("div#main-container table tbody td")
+        response.should have_selector("div#braintree-message:contains('Successfully stored your card info securely.')")
+        response.should have_selector("table#braintree-card-info tbody td")
       end
     end
 
@@ -55,7 +55,7 @@ describe "" do
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#main-container:contains('DECLINE')")
+        response.should have_selector("div#braintree-message:contains('DECLINE')")
         response.should have_selector("form[action='https://secure.braintreepaymentgateway.com/api/transact.php'][method='post']")
         response.should have_selector("form input#firstname[value='Quentin']")
         response.should have_selector("form input#lastname[value='Blake']")
@@ -85,7 +85,7 @@ describe "" do
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#main-container:contains('CVV2/CVC2 No Match')")
+        response.should have_selector("div#braintree-message:contains('CVV2/CVC2 No Match')")
         response.should have_selector("form[action='https://secure.braintreepaymentgateway.com/api/transact.php'][method='post']")
         response.should have_selector("form input#firstname[value='Quentin']")
         response.should have_selector("form input#lastname[value='Blake']")

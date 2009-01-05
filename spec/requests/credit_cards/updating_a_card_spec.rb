@@ -31,8 +31,8 @@ describe "" do
 
         response = request(response.headers['Location'])
         response.should be_successful
-        response.should have_selector("div#main-container:contains('Successfully updated your info in the vault.')")
-        response.should have_selector("div#main-container table tbody td")
+        response.should have_selector("div#braintree-errors:contains('Successfully updated your info in the vault.')")
+        response.should have_selector("div#braintree-errorstable tbody td")
       end
     end
     describe "and a missing ccexp field" do

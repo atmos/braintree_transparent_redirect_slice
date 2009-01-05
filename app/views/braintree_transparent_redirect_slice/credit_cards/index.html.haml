@@ -1,8 +1,10 @@
+#braintree-message
+  = message[:notice]
 %h2 Hey, here's what we know about your account
 %hr
 %h3 Cards Setup
 - unless session.user.credit_cards.empty?
-  %table
+  %table#braintree-card-info
     %thead
       %tr
         %th Name

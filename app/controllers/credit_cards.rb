@@ -22,7 +22,7 @@ class BraintreeTransparentRedirectSlice::CreditCards < BraintreeTransparentRedir
     when 'approved'
       if @gateway_response.cvv_matches?
         session.user.credit_cards.create(:token => @gateway_response.customer_vault_id)
-        redirect('/', :message => {:notice => 'Successfully stored your card info securely.'})
+        redirect(url(:credit_cards), :message => {:notice => 'Successfully stored your card info securely.'})
       else
         redirect(url(:new_credit_card), :message => {:notice => @gateway_response.cvvresponse_string, :transaction_id => params['transactionid']})
       end
