@@ -4,14 +4,14 @@ describe "" do
   before(:each) do
     mount_slice
   end
-  describe "visiting /credit_cards/1/payments/new", :given => 'a user with a credit card in the vault' do
+  describe "visiting /billing/credit_cards/1/payments/new", :given => 'a user with a credit card in the vault' do
     it "should display a form telling you that you'll be charged 10.00" do
-      response = request("/credit_cards/1/payments/new")
+      response = request("/billing/credit_cards/1/payments/new")
       response.should be_successful
     end
   end
 
-  describe "submitting the form at /credit_cards/1/payments/new", :given => 'a user with a credit card in the vault' do
+  describe "submitting the form at /billing/credit_cards/1/payments/new", :given => 'a user with a credit card in the vault' do
     before(:each) do
       @token = User.first.credit_cards.first.token
     end
@@ -22,8 +22,8 @@ describe "" do
 
         api_response = Braintree::Spec::ApiRequest.new('10.00', @token, query_params)
 
-        response = request("/credit_cards/1/payments/new_response", :params => api_response.params)
-        response.should redirect_to("/credit_cards/1")
+        response = request("/billing/credit_cards/1/payments/new_response", :params => api_response.params)
+        response.should redirect_to("/billing/credit_cards/1")
 
         response = request(response.headers['Location'])
         response.should be_successful
@@ -37,8 +37,8 @@ describe "" do
 
         api_response = Braintree::Spec::ApiRequest.new('0.99', @token, query_params)
 
-        response = request("/credit_cards/1/payments/new_response", :params => api_response.params)
-        response.should redirect_to("/credit_cards/1/payments/new")
+        response = request("/billing/credit_cards/1/payments/new_response", :params => api_response.params)
+        response.should redirect_to("/billing/credit_cards/1/payments/new")
 
         response = request(response.headers['Location'])
         response.should be_successful

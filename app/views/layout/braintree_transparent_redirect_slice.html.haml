@@ -1,0 +1,26 @@
+!!! 1.0
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %base{:href => "#{request.protocol}://#{request.host}#{@base_tag}" }
+    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    %meta{"http-equiv" => "Content-Language", :content => "en" }
+    %meta{:name => 'author', :content => "Corey Donohoe" }
+    %title Your Braintree Billing Information
+    %link{:href => public_path_for(:stylesheet, 'master.css')}
+    %script{:src => public_path_for(:javascript, 'master.js') }
+
+  %body
+    #container
+      #header-container
+        - if session.authenticated?
+          %h2= "Welcome, #{session.user.login}!"
+        %hr
+      #left-container
+        - if session.authenticated?
+          %ul
+            %li
+              %a{:href => '/'} Summary
+      #main-container
+        = message[:notice]
+        = catch_content :for_layout
+

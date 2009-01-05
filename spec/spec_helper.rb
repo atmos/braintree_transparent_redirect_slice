@@ -81,7 +81,7 @@ Spec::Runner.configure do |config|
       'city' => 'Compton', 'state' => 'CA', 'country' => 'US', 'zip' => '90220',
       'cvv' => '999', 'ccexp' => '1010', 'ccnumber' => '4111111111111111',
       'customer_vault' => 'add_customer', 'customer_vault_id' => '',
-      'redirect' => 'http://example.org/credit_cards/new_response'
+      'redirect' => 'http://example.org/billing/credit_cards/new_response'
     }
   end
 end
@@ -92,8 +92,7 @@ Merb::Test.add_helpers do
   def mount_slice
     Merb::Router.prepare do
       slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
-      slice(:braintree_transparent_redirect_slice, :name_prefix => nil, :path_prefix => "billing")
-      match('/').to(:controller => 'braintree_transparent_redirect/main', :action => 'index').name(:login)
+      add_slice(:braintree_transparent_redirect_slice, :name_prefix => nil, :path_prefix => "billing")
       #add_slice(BraintreeTransparentRedirectSlice)
     end if standalone?
   end
@@ -113,11 +112,11 @@ given "a user with a credit card in the vault" do
   response = request url(:perform_login), :method => "PUT", 
                      :params => { :login => 'quentin', :password => 'lolerskates' }
   response.should redirect_to '/'
-  response = request("/credit_cards/new")
+  response = request("/billing/credit_cards/new")
 
   api_response = Braintree::Spec::ApiRequest.new('10.00', nil,
                             quentin_form_info.merge({'type'=>'sale', 'payment'=>'creditcard'}))
 
-  response = request("/credit_cards/new_response", :params => api_response.params)
-  response.should redirect_to('/credit_cards')
+  response = request("/billing/credit_cards/new_response", :params => api_response.params)
+  response.should redirect_to('/billing/credit_cards')
 end

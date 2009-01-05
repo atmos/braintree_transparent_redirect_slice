@@ -1,25 +1,14 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
-describe  "/braintree_transparent_redirect_slice/" do
+describe  "" do
   before(:all) do
     mount_slice
   end
-  describe "GET /" do
-    before(:each) do
-      @response = request("/braintree_transparent_redirect_slice/")
-    end
-
-    it "should be successful" do
-      @response.status.should be_successful
-    end
-
-    # This is just an example of what you can do
-    # You can also use the other webrat methods to click links,
-    # fill up forms etc...
-    it "should render the default slice layout" do
-      @response.should have_tag(:strong, :content => BraintreeTransparentRedirectSlice.description)
-#      @response.should have_selector("div#container div#main")
-#      @response.should have_xpath("//div[@id='container']/div[@id='main']")
+  describe "visiting /billing", :given => 'an authenticated user' do
+    it "should display the user's billing information" do
+      response = request("/billing")
+      response.status.should be_successful
+      response.should have_selector("a[href='/billing/credit_cards/new']")
     end
   end
 end

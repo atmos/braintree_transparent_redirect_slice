@@ -78,9 +78,9 @@ if defined?(Merb::Plugins)
       # example of a named route
       #scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
       # the slice is mounted at /braintree_transparent_redirect_slice - note that it comes before default_routes
-      scope.match('/').to(:controller => 'main', :action => 'index').name(:home)
+      scope.match('/').to(:controller => :credit_cards).name(:braintree_home)
       # enable slice-level default routes by default
-      scope.default_routes
+#      scope.default_routes
     end
   end
 
@@ -91,10 +91,6 @@ if defined?(Merb::Plugins)
   #
   # BraintreeTransparentRedirectSlice.push_path(:application, BraintreeTransparentRedirectSlice.root)
   # BraintreeTransparentRedirectSlice.push_app_path(:application, Merb.root / 'slices' / 'braintree_transparent_redirect_slice')
-  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'application'
-  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'credit_cards'
-  #require BraintreeTransparentRedirectSlice.root / 'app' / 'controllers' / 'payments'
-#  BraintreeTransparentRedirectSlice.push_path(:application, BraintreeTransparentRedirectSlice.root / 'app' / 'controllers')
   # ...
   #
   # Any component path that hasn't been set will default to BraintreeTransparentRedirectSlice.root

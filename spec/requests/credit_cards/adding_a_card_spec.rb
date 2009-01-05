@@ -4,9 +4,9 @@ describe "" do
   before(:each) do
     mount_slice
   end
-  describe "visiting /credit_cards/new", :given => 'an authenticated user' do
+  describe "visiting /billing/credit_cards/new", :given => 'an authenticated user' do
     it "should display a form with the necessary input to create a vault entry" do
-      response = request("/credit_cards/new")
+      response = request("/billing/credit_cards/new")
       response.should be_successful
       response.should have_selector("form[action='https://secure.braintreepaymentgateway.com/api/transact.php'][method='post']")
       response.should have_selector("form input#firstname[value='']")
@@ -29,14 +29,14 @@ describe "" do
     end
   end
 
-  describe "submitting the form at /credit_cards/new", :given => 'an authenticated user' do
+  describe "submitting the form at /billing/credit_cards/new", :given => 'an authenticated user' do
     describe "and having it succeed" do
       it "should display basic info about the card stored in the vault" do
         params = quentin_form_info.merge({'type'=>'sale','payment' => 'creditcard'})
         api_response = Braintree::Spec::ApiRequest.new('10.00', nil, params)
 
-        response = request("/credit_cards/new_response", :params => api_response.params)
-        response.should redirect_to('/credit_cards')
+        response = request("/billing/credit_cards/new_response", :params => api_response.params)
+        response.should redirect_to('/billing/credit_cards')
 
         response = request(response.headers['Location'])
         response.should be_successful
@@ -50,8 +50,8 @@ describe "" do
         params = quentin_form_info.merge({'type'=>'sale','payment' => 'creditcard'})
         api_response = Braintree::Spec::ApiRequest.new('0.99', nil, params)
 
-        response = request("/credit_cards/new_response", :params => api_response.params)
-        response.should redirect_to("/credit_cards/new")
+        response = request("/billing/credit_cards/new_response", :params => api_response.params)
+        response.should redirect_to("/billing/credit_cards/new")
 
         response = request(response.headers['Location'])
         response.should be_successful
@@ -80,8 +80,8 @@ describe "" do
         params = quentin_form_info.merge({'type'=>'sale','payment' => 'creditcard', 'cvv' => '911'})
         api_response = Braintree::Spec::ApiRequest.new('10.00', nil, params)
 
-        response = request("/credit_cards/new_response", :params => api_response.params)
-        response.should redirect_to("/credit_cards/new")
+        response = request("/billing/credit_cards/new_response", :params => api_response.params)
+        response.should redirect_to("/billing/credit_cards/new")
 
         response = request(response.headers['Location'])
         response.should be_successful
