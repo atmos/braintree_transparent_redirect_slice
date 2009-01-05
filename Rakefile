@@ -24,6 +24,15 @@ spec = Gem::Specification.new do |s|
   s.email = EMAIL
   s.homepage = HOMEPAGE
   s.add_dependency('merb-slices', '>= 1.0.7.1')
+  s.add_dependency 'libxml-ruby', '=0.9.7'
+  s.add_dependency 'dm-core', '>=0.9.8'
+  s.add_dependency 'dm-validations', '>=0.9.8'
+  s.add_dependency 'merb-auth-core'
+  s.add_dependency 'merb-auth-more'
+  s.add_dependency 'merb-haml'
+  s.add_dependency 'merb-helpers'
+  s.add_dependency 'merb-assets'
+  s.add_dependency 'merb-action-args'
   s.require_path = 'lib'
   s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
 end

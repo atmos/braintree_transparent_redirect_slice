@@ -26,6 +26,7 @@ describe "" do
       response.should have_selector("form input#hash[type='hidden']")
       response.should have_selector("form input#time[type='hidden']")
       response.should have_selector("form input#customer_vault[type='hidden'][value='add_customer']")
+      response.should have_selector("form input#redirect[type='hidden'][value='http://example.org/billing/credit_cards/new_response']")
     end
   end
 

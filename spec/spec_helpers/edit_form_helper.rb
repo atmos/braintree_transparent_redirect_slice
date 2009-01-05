@@ -21,6 +21,7 @@ module BrainTreeEditFormHelper
       target.should have_selector("form input#hash[type='hidden']")
       target.should have_selector("form input#time[type='hidden']")
       target.should have_selector("form input#customer_vault[type='hidden'][value='update_customer']")
+      target.should have_selector("form input#redirect[type='hidden'][value='http://example.org/billing/credit_cards/1/edit_response']")
     end
 
     def failure_message
