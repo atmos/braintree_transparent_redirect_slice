@@ -7,14 +7,11 @@ class BraintreeTransparentRedirectSlice::Payments < BraintreeTransparentRedirect
   end
 
   def new_response(credit_card_id)
-    @gateway_response = Braintree::GatewayResponse.new(params.reject { |k,v| k == 'credit_card_id' })
-    raise Unauthorized unless @gateway_response.is_valid?
-    case @gateway_response.response_status
-    when 'approved'
-      fetch_credit_card(credit_card_id)
-      redirect(slice_url(:credit_card, @credit_card.id), :message => {:notice => 'Successfully charged your Credit Card.'})
+    @gateway_response = Braintree::GatewayResponse.validate(params)
+    if error = @gateway_response.error
+      redirect(slice_url(:new_credit_card_payment), :message => {:notice => error})
     else
-      redirect(slice_url(:new_credit_card_payment), :message => {:notice => @gateway_response.responsetext})
+      redirect(slice_url(:credit_card, credit_card_id), :message => {:notice => 'Successfully charged your Credit Card.'})
     end
   end
 end

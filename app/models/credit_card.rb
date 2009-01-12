@@ -11,7 +11,7 @@ class CreditCard
   def info
     @info ||= CreditCardInfo.new(token)
   end
-  
+
   def invoices
     @invoices ||= CreditCardInvoice.parse(self)
   end
