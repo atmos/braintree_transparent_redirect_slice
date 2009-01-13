@@ -31,8 +31,8 @@ if defined?(Merb::Plugins)
   module BraintreeTransparentRedirectSlice
     # Slice metadata
     self.description = "BraintreeTransparentRedirectSlice is like going to heaven and finding god smoking crack!"
-    self.version = "0.0.1"
-    self.author = "Corey Donohoe at Engine Yard"
+    self.version = BraintreeTransparentRedirectSlice::VERSION
+    self.author = "Corey Donohoe / Engine Yard"
 
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
@@ -91,6 +91,7 @@ if defined?(Merb::Plugins)
   #
   # BraintreeTransparentRedirectSlice.push_path(:application, BraintreeTransparentRedirectSlice.root)
   # BraintreeTransparentRedirectSlice.push_app_path(:application, Merb.root / 'slices' / 'braintree_transparent_redirect_slice')
+  Merb.push_path(:view, BraintreeTransparentRedirectSlice.root / "app" / "views", "**/*.rb")
   # ...
   #
   # Any component path that hasn't been set will default to BraintreeTransparentRedirectSlice.root

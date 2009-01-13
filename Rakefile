@@ -3,13 +3,14 @@ require 'rake/gempackagetask'
 
 require 'merb-core'
 require 'merb-core/tasks/merb'
+require 'lib/braintree_transparent_redirect_slice/version'
 
 GEM_NAME = "braintree_transparent_redirect_slice"
 AUTHOR = "Corey Donohoe"
 EMAIL = "atmos@atmos.org"
 HOMEPAGE = "http://github.com/atmos/braintree_transparent_redirect_slice/"
 SUMMARY = "Merb Slice that allows you to process stuff with braintree, without storing credit cards and shit" 
-GEM_VERSION = "1.0.7.1"
+GEM_VERSION = BraintreeTransparentRedirectSlice::VERSION
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'merb'
@@ -23,7 +24,7 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb-slices', '>= 1.0.7.1')
+  s.add_dependency 'merb-slices', '>= 1.0.7.1'
   s.add_dependency 'libxml-ruby', '=0.9.7'
   s.add_dependency 'dm-core', '>=0.9.8'
   s.add_dependency 'dm-validations', '>=0.9.8'
