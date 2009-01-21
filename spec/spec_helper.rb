@@ -1,3 +1,7 @@
+root = File.expand_path(File.dirname(__FILE__)+'/../')
+ENV['GEM_HOME'] = File.join(root, 'gems')
+ENV['GEM_PATH'] = File.join(root, 'gems')
+
 require 'rubygems'
 require 'merb-core'
 require 'merb-slices'
@@ -8,6 +12,7 @@ require 'pp'
 require 'ruby-debug'
 require 'dm-core'
 require 'dm-validations'
+require root + '/lib/braintree_transparent_redirect_slice/version'
 
 # Add braintree_transparent_redirect_slice.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true
